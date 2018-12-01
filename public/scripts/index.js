@@ -25,6 +25,11 @@ $("#btnSend").on('click',function(ev){
         data:{campeon:$("#campeon").val(),coleccion:$("#coleccion").val(),precio:$("#precio").val()},
         success:function(res){
             tabla.ajax.reload();
+        },
+        error:function(err){
+            if(err.responseJSON.error){
+                alert(err.responseJSON.error.details[0].message);
+            }
         }
     });
 });

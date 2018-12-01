@@ -8,36 +8,57 @@ lolerController.add = async(req,res)=>{
         res.status(400).json(validationResult);
         return;
     }
-    const loler = new Loler({
-        campeon: req.body.campeon,
-        coleccion: req.body.coleccion,
-        precio: req.body.precio
-
-
-    });
-    const result = await loler.save();
-
-    res.json(result);
+    try{
+        const loler = new Loler({
+            campeon: req.body.campeon,
+            coleccion: req.body.coleccion,
+            precio: req.body.precio
+    
+    
+        });
+        const result = await loler.save();
+    
+        res.json(result);
+    }
+    catch(ex){
+        res.status(400).json(ex);
+    }
 }
 lolerController.find = async(req,res)=>{
-    const result = await Loler.find();
+    try{
+        const result = await Loler.find();
 
-    res.json(result);
+        res.json(result);
+    }
+    catch(ex){
+        res.status(400).json(ex);
+
+    }
 }
 lolerController.update = async(req,res)=>{
-    const result = await Loler.findOneAndUpdate({_id:req.params.id},{
-        campeon: req.body.campeon,
-        coleccion: req.body.coleccion,
-        precio: req.body.precio
-    },{new:true});
+   try{
+        const result = await Loler.findOneAndUpdate({_id:req.params.id},{
+            campeon: req.body.campeon,
+            coleccion: req.body.coleccion,
+            precio: req.body.precio
+        },{new:true});
 
-    res.json(result);
+        res.json(result);
+   }
+   catch(ex){
+       res.status(400).json(ex);
+   }
 }
 
 lolerController.delete = async(req,res)=>{
 
-    const result = await Loler.findByIdAndRemove({_id:req.params.id});
-    res.json(result);
+    try{
+        const result = await Loler.findByIdAndRemove({_id:req.params.id});
+        res.json(result);
+    }
+    catch(ex){
+       res.status(400).json(ex);
+    }
 }
 
 module.exports = lolerController;
