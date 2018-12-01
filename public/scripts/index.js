@@ -30,6 +30,9 @@ $("#btnSend").on('click',function(ev){
             if(err.responseJSON.error){
                 alert(err.responseJSON.error.details[0].message);
             }
+            if(err.responseJSON.errmsg){
+                alert(err.responseJSON.errmsg);
+            }
         }
     });
 });
