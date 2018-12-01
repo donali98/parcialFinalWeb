@@ -1,5 +1,4 @@
-var urlBase = '/api/skin';
-
+var urlUpdate = '';
 var tabla = $("#table").DataTable({
     "ajax":{
         "url":"/api/skin",
@@ -16,11 +15,10 @@ var tabla = $("#table").DataTable({
 
 $("#btnSend").on('click',function(ev){
     
-    urlBase = '/api/skin';
 
     ev.preventDefault();
     $.ajax({
-        url:urlBase,
+        url:'/api/skin',
         method:"post",
         data:{campeon:$("#campeon").val(),coleccion:$("#coleccion").val(),precio:$("#precio").val()},
         success:function(res){
@@ -37,19 +35,16 @@ $("#btnSend").on('click',function(ev){
     });
 });
 
-$("#table tbody").on('click','#btnEliminar',function(){
-
+$("#table tbody").on('click','#btnEliminar',function(ev){
+    ev.preventDefault();
     var data = tabla.row($(this).parent().parent()).data();
 
-
-    urlBase = urlBase+'/'+data._id;
-
-    $("#btnUpdate").attr('class','btn btn-primary d-none');
-    $("#btnCancel").attr('class','btn btn-danger d-none');
-    $("#btnSend").attr('class','btn btn-success d-line');
+    $("#btnUpdate").attr('class','btn btn-primary d-none form-control');
+    $("#btnCancel").attr('class','btn btn-danger d-none form-control');
+    $("#btnSend").attr('class','btn btn-success d-line form-control');
 
     $.ajax({
-        url:urlBase,
+        url:'/api/skin/'+data._id,
         method:'delete',
         success:function(res){
             tabla.ajax.reload();
@@ -74,12 +69,11 @@ $("#table tbody").on('click','#btnModificar',function(){
     $("#coleccion").val(data.coleccion);
     $("#precio").val(data.precio);
 
+    urlUpdate = '/api/skin/'+data._id;
+    $("#btnUpdate").attr('class','btn btn-primary d-line form-control');
+    $("#btnCancel").attr('class','btn btn-danger d-line form-control');
+    $("#btnSend").attr('class','btn btn-success d-none form-control');
 
-    $("#btnUpdate").attr('class','btn btn-primary d-line');
-    $("#btnCancel").attr('class','btn btn-danger d-line');
-    $("#btnSend").attr('class','btn btn-success d-none');
-
-    urlBase = urlBase+'/'+data._id;
 
 });
 
@@ -87,7 +81,7 @@ $("#btnUpdate").on('click',function(ev){
     
     ev.preventDefault();
     $.ajax({
-        url:urlBase,
+        url:urlUpdate,
         method:"put",
         data:{campeon:$("#campeon").val(),coleccion:$("#coleccion").val(),precio:$("#precio").val()},
         success:function(res){
@@ -96,21 +90,21 @@ $("#btnUpdate").on('click',function(ev){
             $("#coleccion").val('');
             $("#precio").val('');
 
-            $("#btnUpdate").attr('class','btn btn-primary d-none');
-            $("#btnCancel").attr('class','btn btn-danger d-none');
-            $("#btnSend").attr('class','btn btn-success d-line');
+            $("#btnUpdate").attr('class','btn btn-primary d-none form-control');
+            $("#btnCancel").attr('class','btn btn-danger d-none form-control');
+            $("#btnSend").attr('class','btn btn-success d-line form-control');
         },
         error:function(err){
-            if(err.responseText){
-                alert('Hubo un error, verifique que el registro que se desea ingresar es valido o no esta repetido');
-            }
-            else if(err.responseJSON.error){
+
+             if(err.responseJSON.error){
                 alert(err.responseJSON.error.details[0].message);
             }
             else if(err.responseJSON.errmsg){
                 alert(err.responseJSON.errmsg);
             }
-            else alert('Hubo un error, verifique que el registro que se desea ingresar es valido o no esta repetido');
+            else if(err.responseText){
+                alert('Hubo un error, verifique que el registro que se desea ingresar es valido o no esta repetido');
+            }
         }
     })
 
@@ -121,7 +115,7 @@ $("#btnCancel").on('click',function(ev){
     $("#campeon").val('');
     $("#coleccion").val('');
     $("#precio").val('');
-    $("#btnUpdate").attr('class','btn btn-primary d-none');
-    $("#btnCancel").attr('class','btn btn-danger d-none');
-    $("#btnSend").attr('class','btn btn-success d-line');
+    $("#btnUpdate").attr('class','btn btn-primary d-none form-control');
+    $("#btnCancel").attr('class','btn btn-danger d-none form-control');
+    $("#btnSend").attr('class','btn btn-success d-line form-control');
 })

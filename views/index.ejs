@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 mb-3">
-                <form>
+                <!-- <form>
                     <div class="form-group">
                       <label for="campeon">Campeon</label>
                       <input type="text" class="form-control" id="campeon"  placeholder="Campeon">
@@ -36,7 +36,30 @@
                     <button id="btnUpdate" class="btn btn-primary d-none">Modificar</button>
                     <button id="btnCancel" class="btn btn-danger d-none">Cancelar</button>
 
-                  </form>
+                  </form> -->
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label for="campeon">Campeon</label>                    
+                            <input type="text" class="form-control" id="campeon" placeholder="Campeon">
+                        </div>
+                        <div class="col">
+                            <label for="coleccion">Coleccion</label>                    
+                            <input type="text" class="form-control" id="coleccion" placeholder="Coleccion">
+                        </div>
+                        <div class="col">
+                            <label for="precio">Precio</label>                    
+                            <input type="text" class="form-control" id="precio" placeholder="Precio">
+                        </div>
+
+                        <div class="col">
+                            <label for="btnSend">Acciones</label>                    
+                            <button id="btnSend" class="btn btn-success form-control"><i class='fas fa-plus-circle'></i></button>
+                            <button id="btnUpdate" class="btn btn-primary d-none form-control"><i class='fas fa-pen-alt'></i></button>
+                            <button id="btnCancel" class="btn btn-danger d-none form-control"><i class='fas fa-times'></i></button>    
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="col-sm-12">
                 <table id="table" class="table table-hover table-bordered">
