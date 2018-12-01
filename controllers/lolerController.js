@@ -24,5 +24,14 @@ lolerController.find = async(req,res)=>{
 
     res.json(result);
 }
+lolerController.update = async(req,res)=>{
+    const result = await Loler.findOneAndUpdate({_id:req.params.id},{
+        campeon: req.body.campeon,
+        coleccion: req.body.coleccion,
+        precio: req.body.precio
+    });
+
+    res.json(result);
+}
 
 module.exports = lolerController;
