@@ -19,5 +19,10 @@ lolerController.add = async(req,res)=>{
 
     res.json(result);
 }
+lolerController.find = async(req,res)=>{
+    const result = await Loler.find();
+
+    res.json(result);
+}
 
 module.exports = lolerController;
