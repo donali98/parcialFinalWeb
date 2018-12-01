@@ -35,6 +35,16 @@ lolerController.find = async(req,res)=>{
 
     }
 }
+lolerController.findOne = async(req,res)=>{
+    try{
+        const result = await Loler.findById(req.params.id);
+        res.json(result);
+    }
+    catch(ex){
+        res.status(400).json(ex);
+
+    }
+}
 lolerController.update = async(req,res)=>{
    try{
         const result = await Loler.findOneAndUpdate({_id:req.params.id},{

@@ -53,6 +53,14 @@ $("#table tbody").on('click','#btnEliminar',function(){
         method:'delete',
         success:function(res){
             tabla.ajax.reload();
+        },
+        error:function(err){
+            if(err.responseJSON.error){
+                alert(err.responseJSON.error.details[0].message);
+            }
+            if(err.responseJSON.errmsg){
+                alert(err.responseJSON.errmsg);
+            }
         }
     })
 
@@ -90,6 +98,15 @@ $("#btnUpdate").on('click',function(ev){
             $("#btnUpdate").attr('class','btn btn-primary d-none');
             $("#btnCancel").attr('class','btn btn-danger d-none');
             $("#btnSend").attr('class','btn btn-success d-line');
+        },
+        error:function(err){
+            if(err.responseJSON.error){
+                alert(err.responseJSON.error.details[0].message);
+            }
+            else if(err.responseJSON.errmsg){
+                alert(err.responseJSON.errmsg);
+            }
+            else alert('Hubo un error, verifique que el registro que se desea ingresar es valido o no esta repetido');
         }
     })
 
