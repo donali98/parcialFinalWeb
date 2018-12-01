@@ -10,7 +10,7 @@ var tabla = $("#table").DataTable({
         {"data":"campeon"},
         {"data":"coleccion"},
         {"data":"precio"},
-        {"data":null,"defaultContent":"<button class='btn btn-primary' id='btnModificar'>Modificar</button> <button class='btn btn-danger' id='btnEliminar'>Eliminar</button>"},
+        {"data":null,"defaultContent":"<button class='btn btn-primary' id='btnModificar'><i class='fas fa-pen-alt'></i></button> <button class='btn btn-danger' id='btnEliminar'><i class='fas fa-trash-alt'></i></button>"},
     ]
 });
 
@@ -55,6 +55,7 @@ $("#table tbody").on('click','#btnEliminar',function(){
             tabla.ajax.reload();
         },
         error:function(err){
+            console.log(err);
             if(err.responseJSON.error){
                 alert(err.responseJSON.error.details[0].message);
             }
@@ -100,7 +101,10 @@ $("#btnUpdate").on('click',function(ev){
             $("#btnSend").attr('class','btn btn-success d-line');
         },
         error:function(err){
-            if(err.responseJSON.error){
+            if(err.responseText){
+                alert('Hubo un error, verifique que el registro que se desea ingresar es valido o no esta repetido');
+            }
+            else if(err.responseJSON.error){
                 alert(err.responseJSON.error.details[0].message);
             }
             else if(err.responseJSON.errmsg){

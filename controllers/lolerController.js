@@ -46,7 +46,13 @@ lolerController.findOne = async(req,res)=>{
     }
 }
 lolerController.update = async(req,res)=>{
-   try{
+    const validationResult = validateLoler(req.body);
+    if(validationResult.error){
+        res.status(400).json(validationResult);
+        return;
+    }
+
+    try{
         const result = await Loler.findOneAndUpdate({_id:req.params.id},{
             campeon: req.body.campeon,
             coleccion: req.body.coleccion,
