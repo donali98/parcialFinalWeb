@@ -10,7 +10,7 @@ var tabla = $("#table").DataTable({
         {"data":"campeon"},
         {"data":"coleccion"},
         {"data":"precio"},
-        {"data":null,"defaultContent":"<button class='btn btn-primary' id='btnModificar'>Modificar</button>"},
+        {"data":null,"defaultContent":"<button class='btn btn-primary' id='btnModificar'>Modificar</button> <button class='btn btn-danger' id='btnEliminar'>Eliminar</button>"},
     ]
 });
 
@@ -29,12 +29,39 @@ $("#btnSend").on('click',function(ev){
     });
 });
 
+$("#table tbody").on('click','#btnEliminar',function(){
+
+    var data = tabla.row($(this).parent().parent()).data();
+
+
+    urlBase = urlBase+'/'+data._id;
+
+    $("#btnUpdate").attr('class','btn btn-primary d-none');
+    $("#btnCancel").attr('class','btn btn-danger d-none');
+    $("#btnSend").attr('class','btn btn-success d-line');
+
+    $.ajax({
+        url:urlBase,
+        method:'delete',
+        success:function(res){
+            tabla.ajax.reload();
+        }
+    })
+
+});
 $("#table tbody").on('click','#btnModificar',function(){
+
+    var data = tabla.row($(this).parent().parent()).data();
+
+    $("#campeon").val(data.campeon);
+    $("#coleccion").val(data.coleccion);
+    $("#precio").val(data.precio);
+
+
     $("#btnUpdate").attr('class','btn btn-primary d-line');
     $("#btnCancel").attr('class','btn btn-danger d-line');
     $("#btnSend").attr('class','btn btn-success d-none');
 
-    var data = tabla.row($(this).parent().parent()).data();
     urlBase = urlBase+'/'+data._id;
 
 });
@@ -48,7 +75,24 @@ $("#btnUpdate").on('click',function(ev){
         data:{campeon:$("#campeon").val(),coleccion:$("#coleccion").val(),precio:$("#precio").val()},
         success:function(res){
             tabla.ajax.reload();
+            $("#campeon").val('');
+            $("#coleccion").val('');
+            $("#precio").val('');
+
+            $("#btnUpdate").attr('class','btn btn-primary d-none');
+            $("#btnCancel").attr('class','btn btn-danger d-none');
+            $("#btnSend").attr('class','btn btn-success d-line');
         }
     })
 
+});
+
+$("#btnCancel").on('click',function(ev){
+    ev.preventDefault();
+    $("#campeon").val('');
+    $("#coleccion").val('');
+    $("#precio").val('');
+    $("#btnUpdate").attr('class','btn btn-primary d-none');
+    $("#btnCancel").attr('class','btn btn-danger d-none');
+    $("#btnSend").attr('class','btn btn-success d-line');
 })

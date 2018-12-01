@@ -29,8 +29,14 @@ lolerController.update = async(req,res)=>{
         campeon: req.body.campeon,
         coleccion: req.body.coleccion,
         precio: req.body.precio
-    });
+    },{new:true});
 
+    res.json(result);
+}
+
+lolerController.delete = async(req,res)=>{
+
+    const result = await Loler.findByIdAndRemove({_id:req.params.id});
     res.json(result);
 }
 
